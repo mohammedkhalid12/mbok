@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/transfeer','AccountController@transfeer');
+Route::post("/auth","AuthController@auth");
