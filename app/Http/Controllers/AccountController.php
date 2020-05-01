@@ -30,8 +30,8 @@ class AccountController extends Controller
         $sender->save();
 
         $trans = Transaction::create([
-            "sender" => $sender->id,
-            "receiver" => $receiver->id,
+            "sender_id" => $sender->id,
+            "recever_id" => $receiver->id,
             "amount" => $amount
         ]);
 
