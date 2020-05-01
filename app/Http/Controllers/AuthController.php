@@ -31,9 +31,70 @@ class AuthController extends Controller
         } else {
 
             return response()->json([
-                "error" => "email or password is wrong"
+                "error" => "email used"
             ], 403);
 
         }
     }
+
+    public function register(Request $request)
+    {
+$name =$request -> name;
+$email =$request -> email;
+$password =$request -> password;
+$confirmـpassword =$request -> confirmـpassword;
+
+
+$user = User::where("email", "=", $email);
+if($email ==null){
+    return response()->json([
+        "error" => "email used"
+    ], 403);
+}
+
+
+
+
+$numpass = strlen($password);
+
+if($numpass > 4){
+    return response()->json([
+        "error" => " password is more than 4 "
+    ], 400);
+
+}if($numpass < 4){
+    return response()->json([
+        "error" => " password is less than 4 "
+    ], 400);
+}if ($password != $confirmـpassword){
+    return response()->json([
+        "error" => " password is missmatch"
+    ], 400);
+}
+
+/*
+$user->$name =$request -> name;
+$user->$email =$request -> email;
+$user->$password =$request -> password;
+$user->balance  =0 ;
+$user->save();
+*/
+
+$user = User::create([
+    "name" =>  $name ,
+    "email" => $email,
+    "password" => bcrypt($password) ,
+    "balance" => 0,
+    
+
+]);
+
+return response()->json([
+    "access_token" => $user->createToken("me")->accessToken,
+    "user" => $user
+], 200);
+return $name;
+
+    }
+
 }
