@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::post('/transfeer','AccountController@transfeer');
+Route::post('/transfeer','AccountController@transfeer')->middleware("auth:api");
 Route::post("/auth","AuthController@auth");
+
