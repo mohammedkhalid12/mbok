@@ -15,6 +15,12 @@ class AuthController extends Controller
 
         $user = User::where("email", "=", $email)->first();
 
+        if ($user == null){
+            return response()->json([
+                "error" => "email or password is wrong"
+            ], 403);
+        }
+
         if (Hash::check($password, $user->password)) {
 
             return response()->json([
